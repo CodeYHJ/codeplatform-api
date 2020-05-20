@@ -9,7 +9,7 @@ function checkErr()
         echo $1 "admin fail"
     fi
 }
-git checkout develop
+git checkout master
 
 git pull
 

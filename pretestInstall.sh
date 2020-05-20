@@ -8,7 +8,7 @@ function checkErr()
         echo $1 "pretestadmin fail"
     fi
 }
-git checkout test
+git checkout develop
 
 git pull
 
