@@ -29,4 +29,4 @@ docker build -t admin . && docker run -dit -p 7001:7001 \
   --restart=unless-stopped \
   --name admin \
   --mount type=bind,source=/root/logs/admin,target=/egg/egglogs \
-  admin
+  admin start

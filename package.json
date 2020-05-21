@@ -10,7 +10,7 @@
   },
   "scripts": {
     "start": "ets && tsc -p tsconfig.json && egg-scripts start",
-    "pretest": "ets && tsc -p tsconfig.json && egg-scripts start --env=pretst",
+    "pretest": "ets && tsc -p tsconfig.json && egg-scripts start --env=pretest",
     "bkstart": "egg-scripts stop --title=egg-server-codePlatformApi-node && ets && tsc -p tsconfig.json && egg-scripts start --daemon --title=egg-server-codePlatformApi-node",
     "stop": "egg-scripts stop --title=egg-server-codePlatformApi-node",
     "dev": "egg-bin dev",

@@ -18,11 +18,18 @@ export default (appInfo: EggAppInfo) => {
       httpOnly: true,
       encrypt: true,
     },
-
+    security: {
+      csrf: {
+        enable: false,
+        headerName: 'x-csrf-token',
+        ignoreJSON: false,
+      },
+      domainWhiteList: [ 'https://pretest.codeyhj.cn' ],
+    },
     // 跨域配置
     cors: {
       credentials: true,
-      origin: ctx => ctx.get('origin'),
+      // origin: ctx => ctx.get('origin'),
       allowMethods: 'GET,POST,OPTIONS',
     },
     // 参数验证配置
@@ -32,12 +39,12 @@ export default (appInfo: EggAppInfo) => {
     },
   };
 
-  // override config from framework / plugin
-  // use for cookie sign key, should change to your own and keep security
+  // override config from framework / plu gin
+  // use for cookie  sign key, should change to your own and keep security
   config.keys = appInfo.name + '_1584204692957_7292';
 
   // add your egg config in here
-  config.middleware = ['interceptErr', 'filter'];
+  config.middleware = [ 'interceptErr', 'filter' ];
 
   // add your special config in here
   const bizConfig = {

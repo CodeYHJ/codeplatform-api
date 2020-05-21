@@ -21,13 +21,7 @@ export default appInfo => {
       },
       agent: true,
     },
-    security: {
-      csrf: {
-        enable: false,
-        headerName: 'x-csrf-token',
-        ignoreJSON: false,
-      },
-    },
+
     logger: {
       appLogName: `appLog/${appInfo.name}-web.log`,
       coreLogName: 'coreLog/egg-web.log',

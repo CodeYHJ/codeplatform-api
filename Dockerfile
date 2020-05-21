@@ -1,5 +1,6 @@
 FROM node:13.12.0-alpine
 
+
 # 设置时区
 RUN ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime && echo 'Asia/Shanghai' >/etc/timezone
 
@@ -17,4 +18,5 @@ COPY . /egg/admin
 
 EXPOSE 7001 
 
-CMD cd /egg/admin && npm run start
+ENTRYPOINT ["npm","run"]
+

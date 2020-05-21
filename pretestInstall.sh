@@ -28,4 +28,4 @@ checkErr rmi
   --restart=unless-stopped \
   --name pretestadmin \
   --mount type=bind,source=/root/logs/pretestAdmin,target=/egg/egglogs \
-  pretestadmin
+  pretestadmin pretest
