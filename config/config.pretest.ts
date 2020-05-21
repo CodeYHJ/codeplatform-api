@@ -1,7 +1,7 @@
 import { EggAppConfig, PowerPartial } from 'egg';
 import * as path from 'path';
 
-export default () => {
+export default appInfo => {
   const config: PowerPartial<EggAppConfig> = {
     sequelize: {
       dialect: 'mysql',
@@ -10,6 +10,14 @@ export default () => {
       database: 'dev',
       username: 'root',
       password: 'example',
+    },
+    logger: {
+      appLogName: `appLog/${appInfo.name}-web.log`,
+      coreLogName: 'coreLog/egg-web.log',
+      agentLogName: 'agentLog/egg-agent.log',
+      errorLogName: 'errorLog/common-error.log',
+      outputJSON: true,
+      dir: '/egg/egglogs',
     },
     customLogger: {
       scheduleLogger: {
