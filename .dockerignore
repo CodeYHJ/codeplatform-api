@@ -1,0 +1,21 @@
+node_modules
+npm-debug.log
+logs
+test
+
+.gitignore
+.prettierrc
+
+# eslint
+.eslintignore
+.eslintignore
+
+.prettierrc
+
+#travis
+.travis.yml
+
+.appveyor.yml
+
+.README.md
+

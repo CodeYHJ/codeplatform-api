@@ -1,0 +1,89 @@
+{
+  "name": "codeplatform-api",
+  "version": "0.0.1",
+  "main": "index.js",
+  "author": "codeyhj",
+  "license": "MIT",
+  "egg": {
+    "typescript": true,
+    "declarations": true
+  },
+  "scripts": {
+    "start": "ets && tsc -p tsconfig.json && egg-scripts start",
+    "pretest": "ets && tsc -p tsconfig.json && egg-scripts start --env=pretest",
+    "bkstart": "egg-scripts stop --title=egg-server-codePlatformApi-node && ets && tsc -p tsconfig.json && egg-scripts start --daemon --title=egg-server-codePlatformApi-node",
+    "stop": "egg-scripts stop --title=egg-server-codePlatformApi-node",
+    "dev": "egg-bin dev",
+    "debug": "egg-bin debug",
+    "test-local": "egg-bin test test/app/schedule/updateTask.test.ts",
+    "test": "npm run lint -- --fix && npm run test-local",
+    "cov": "egg-bin cov",
+    "tsc": "ets && tsc -p tsconfig.json",
+    "ci": "npm run lint && npm run cov && npm run tsc",
+    "autod": "autod",
+    "lint": "eslint . --ext .ts",
+    "clean": "ets clean",
+    "commit": "git add . && commit && git push",
+    "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s -r 0"
+  },
+  "husky": {
+    "hooks": {
+      "commit-msg": "validate-commit-msg"
+    }
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/@codeyhj/changlog-emojis"
+    }
+  },
+  "dependencies": {
+    "egg": "^2.6.1",
+    "egg-cors": "^2.2.3",
+    "egg-passport": "^2.1.1",
+    "egg-redis": "^2.4.0",
+    "egg-scripts": "^2.6.0",
+    "egg-security": "^2.7.1",
+    "egg-sequelize": "^5.2.1",
+    "egg-session-redis": "^2.1.0",
+    "egg-validate": "^2.0.2",
+    "mysql2": "^2.1.0",
+    "uuid": "^7.0.2"
+  },
+  "devDependencies": {
+    "@codeyhj/changlog-emojis": "^0.0.4",
+    "@commitlint/config-conventional": "^8.3.4",
+    "@commitlint/format": "^8.3.4",
+    "@commitlint/prompt-cli": "^8.3.5",
+    "@types/mocha": "^2.2.40",
+    "@types/node": "^7.0.12",
+    "@types/supertest": "^2.0.0",
+    "autod": "^3.0.1",
+    "autod-egg": "^1.1.0",
+    "commitizen": "^4.0.5",
+    "egg-bin": "^4.11.0",
+    "egg-ci": "^1.8.0",
+    "egg-mock": "^3.16.0",
+    "eslint": "^6.7.2",
+    "eslint-config-egg": "^8.0.0",
+    "eslint-plugin-prettier": "^3.1.2",
+    "husky": "^4.2.5",
+    "prettier": "^1.19.1",
+    "prettier-eslint": "^9.0.1",
+    "tslib": "^1.9.0",
+    "typescript": "^3.0.0",
+    "validate-commit-msg": "^2.14.0"
+  },
+  "engines": {
+    "node": ">=8.9.0"
+  },
+  "ci": {
+    "version": "8"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://gitee.com/colgateyhj/codePlatform-Api"
+  },
+  "eslintIgnore": [
+    "coverage"
+  ]
+}
