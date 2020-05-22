@@ -28,7 +28,7 @@
   },
   "husky": {
     "hooks": {
-      "commit-msg": "validate-commit-msg"
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
     }
   },
   "config": {
@@ -51,6 +51,7 @@
   },
   "devDependencies": {
     "@codeyhj/changlog-emojis": "^0.0.4",
+    "@commitlint/cli": "^8.3.5",
     "@commitlint/config-conventional": "^8.3.4",
     "@commitlint/format": "^8.3.4",
     "@commitlint/prompt-cli": "^8.3.5",
