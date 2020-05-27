@@ -31,11 +31,7 @@
       "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
     }
   },
-  "config": {
-    "commitizen": {
-      "path": "./node_modules/@codeyhj/changlog-emojis"
-    }
-  },
+
   "dependencies": {
     "egg": "^2.6.1",
     "egg-cors": "^2.2.3",

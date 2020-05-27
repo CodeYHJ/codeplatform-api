@@ -11,8 +11,6 @@ import ExportChart from '../../../app/service/Chart';
 import ExportTask from '../../../app/service/Task';
 import ExportUpdate from '../../../app/service/Update';
 import ExportUser from '../../../app/service/User';
-import ExportYuque from '../../../app/service/Yuque';
-import ExportJenkins from '../../../app/service/jenkins';
 
 declare module 'egg' {
   interface IService {
@@ -21,7 +19,5 @@ declare module 'egg' {
     task: AutoInstanceType<typeof ExportTask>;
     update: AutoInstanceType<typeof ExportUpdate>;
     user: AutoInstanceType<typeof ExportUser>;
-    yuque: AutoInstanceType<typeof ExportYuque>;
-    jenkins: AutoInstanceType<typeof ExportJenkins>;
   }
 }

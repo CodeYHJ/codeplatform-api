@@ -39,7 +39,7 @@ export default class Chart extends Service {
     }).catch(err => {
       throw ServiceError.from(err);
     });
-    const dayResult = [...day_type_1_Result, ...day_type_2_Result];
+    const dayResult = [ ...day_type_1_Result, ...day_type_2_Result ];
     if (!dayResult || !dayResult.length) return day;
     day = await ctx.helper.filterTask(dayResult);
     return day;
@@ -118,19 +118,19 @@ export default class Chart extends Service {
             [
               ctx.model.Sequelize.fn(
                 'COUNT',
-                ctx.model.Sequelize.col('priority')
+                ctx.model.Sequelize.col('priority'),
               ),
               'total',
             ],
             [
               ctx.model.Sequelize.fn(
                 'SUM',
-                ctx.model.Sequelize.col('complete')
+                ctx.model.Sequelize.col('complete'),
               ),
               'complete',
             ],
           ],
-          group: ['priority'],
+          group: [ 'priority' ],
           transaction: t,
         });
         return dbResult;
@@ -161,12 +161,12 @@ export default class Chart extends Service {
           },
           attributes: [
             'priority',
-            [Sequelize.fn('COUNT', Sequelize.col('priority')), 'total'],
-            [Sequelize.fn('SUM', Sequelize.col('complete')), 'complete'],
-            [Sequelize.fn('day', Sequelize.col('create_at')), 'day'],
+            [ Sequelize.fn('COUNT', Sequelize.col('priority')), 'total' ],
+            [ Sequelize.fn('SUM', Sequelize.col('complete')), 'complete' ],
+            [ Sequelize.fn('day', Sequelize.col('create_at')), 'day' ],
           ],
 
-          group: ['create_at'],
+          group: [ 'priority', Sequelize.fn('day', Sequelize.col('create_at')) ],
           transaction: t,
         });
         return dbResult;

@@ -1,11 +1,12 @@
-import BaseController from './base';
+import { Controller } from 'egg';
+
 import { S200 } from '../core/error';
 
-export default class UserController extends BaseController {
+export default class UserController extends Controller {
   public async Login() {
     const { ctx, service } = this;
     const validate = { name: 'string', password: 'string' };
-    await this.check(validate, ctx.request.body);
+    await ctx.checkValidate(validate, ctx.request.body);
     const { name, password } = ctx.request.body;
     const result = await service.user.login(name, password);
     ctx.login(result);
@@ -23,7 +24,7 @@ export default class UserController extends BaseController {
 
     const validate = { name: 'string', password: 'string' };
 
-    await this.check(validate, ctx.request.body);
+    await ctx.checkValidate(validate, ctx.request.body);
 
     const { name, password } = ctx.request.body;
 
@@ -39,7 +40,7 @@ export default class UserController extends BaseController {
 
     const validate = { name: 'string' };
 
-    await this.check(validate, ctx.request.body);
+    await ctx.checkValidate(validate, ctx.request.body);
 
     const { name } = ctx.request.body;
 
@@ -54,7 +55,7 @@ export default class UserController extends BaseController {
       password: 'string?',
       avatar_url: 'string?',
     };
-    await this.check(validate, ctx.request.body);
+    await ctx.checkValidate(validate, ctx.request.body);
     const {
       name = false,
       password = false,
