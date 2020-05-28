@@ -1,6 +1,6 @@
 import { Controller } from 'egg';
 
-import { S200 } from '../core/error';
+import { S200 } from '../lib/index';
 
 export default class UserController extends Controller {
   public async Login() {

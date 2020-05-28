@@ -1,6 +1,6 @@
 import { Service } from 'egg';
 import { Op } from 'sequelize';
-import ServiceError from '../core/error/service/serviceError';
+import { dbError } from '../lib/index';
 import { Task } from '../../typings/type/service/task';
 
 export default class UpdateService extends Service {
@@ -27,7 +27,7 @@ export default class UpdateService extends Service {
         },
       ],
     }).catch(err => {
-      ServiceError.from(err);
+      dbError.from(err);
     });
 
     return result;
@@ -50,7 +50,7 @@ export default class UpdateService extends Service {
         },
       ],
     }).catch(err => {
-      ServiceError.from(err);
+      dbError.from(err);
     });
     return result;
   }
@@ -98,7 +98,7 @@ export default class UpdateService extends Service {
         { where: { id: task.id } },
       ).catch(err => {
         console.log(err);
-        throw ServiceError.from(err);
+        throw dbError.from(err);
       });
     }
     await transaction.commit();
@@ -122,7 +122,7 @@ export default class UpdateService extends Service {
         { where: { id: task.id } },
       ).catch(err => {
         console.log(err);
-        throw ServiceError.from(err);
+        throw dbError.from(err);
       });
     }
 
@@ -138,7 +138,7 @@ export default class UpdateService extends Service {
         frequency: task.frequency,
       };
       const dbResult = await this.ctx.model.Task.create(addData).catch(err => {
-        ServiceError.from(err);
+        dbError.from(err);
       });
       const newMicroTaskList = await microtasks.map(el => {
         return {
@@ -148,7 +148,7 @@ export default class UpdateService extends Service {
         };
       });
       await this.ctx.model.Microtask.bulkCreate(newMicroTaskList).catch(err => {
-        ServiceError.from(err);
+        dbError.from(err);
       });
     }
 
@@ -171,7 +171,7 @@ export default class UpdateService extends Service {
         },
       ],
     }).catch(err => {
-      ServiceError.from(err);
+      dbError.from(err);
     });
     for (let index = 0; index < result.length; index++) {
       const task = result[index];

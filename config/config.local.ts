@@ -5,7 +5,7 @@ export default appInfo => {
     // redis配置
     redis: {
       client: {
-        host: 'www.codeyhj.top',
+        host: 'localhost',
         port: 6379,
         password: '',
         db: 0,
@@ -18,7 +18,7 @@ export default appInfo => {
       port: 3306,
       database: 'dev',
       username: 'root',
-      password: '123456',
+      password: 'example',
     },
     security: {
       csrf: {

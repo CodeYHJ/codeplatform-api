@@ -1,6 +1,6 @@
 import { Service } from 'egg';
 import { Op } from 'sequelize';
-import ServiceError from '../core/error/service/serviceError';
+import { dbError } from '../lib/index';
 
 /**
  * Chart Service
@@ -24,7 +24,7 @@ export default class Chart extends Service {
         },
       },
     }).catch(err => {
-      throw ServiceError.from(err);
+      throw dbError.from(err);
     });
     const day_type_2_Result = await ctx.model.Task.findAll({
       where: {
@@ -37,7 +37,7 @@ export default class Chart extends Service {
         },
       },
     }).catch(err => {
-      throw ServiceError.from(err);
+      throw dbError.from(err);
     });
     const dayResult = [ ...day_type_1_Result, ...day_type_2_Result ];
     if (!dayResult || !dayResult.length) return day;
@@ -65,7 +65,7 @@ export default class Chart extends Service {
         },
       },
     }).catch(err => {
-      throw ServiceError.from(err);
+      throw dbError.from(err);
     });
     if (!weekResult || !weekResult.length) return week;
     week = await ctx.helper.filterTask(weekResult);
@@ -136,7 +136,7 @@ export default class Chart extends Service {
         return dbResult;
       })
       .catch(error => {
-        throw ServiceError.from(error);
+        throw dbError.from(error);
       });
     return result;
   }
@@ -172,7 +172,7 @@ export default class Chart extends Service {
         return dbResult;
       })
       .catch(error => {
-        throw ServiceError.from(error);
+        throw dbError.from(error);
       });
     return result;
   }

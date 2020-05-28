@@ -1,5 +1,5 @@
-import ServiceError from '../core/error/service/serviceError';
-import { E400 } from '../core/error';
+import { dbError } from '../lib/index';
+import { E400 } from '../lib/index';
 
 module.exports = {
   async getIdByRedis() {
@@ -17,7 +17,7 @@ module.exports = {
         return user;
       }
     } catch (error) {
-      throw ServiceError.from(error);
+      throw dbError.from(error);
     }
   },
   async checkValidate(rule, requestData) {

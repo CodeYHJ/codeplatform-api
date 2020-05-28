@@ -1,4 +1,4 @@
-import { S200 } from '../core/error';
+import { S200 } from '../lib/index';
 import { Controller } from 'egg';
 
 export default class ChartController extends Controller {

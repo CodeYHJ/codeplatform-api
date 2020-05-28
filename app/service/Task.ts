@@ -1,5 +1,5 @@
 import { Service } from 'egg';
-import ServiceError from '../core/error/service/serviceError';
+import { dbError } from '../lib/index';
 
 /**
  * Task Service
@@ -14,7 +14,7 @@ export default class TaskService extends Service {
     const { ctx } = this;
     const { userid, name } = data;
     await ctx.model.Task.create({ userid, name }).catch(err => {
-      throw ServiceError.from(err);
+      throw dbError.from(err);
     });
   }
 
@@ -43,7 +43,7 @@ export default class TaskService extends Service {
         ],
       })
       .catch(err => {
-        throw ServiceError.from(err);
+        throw dbError.from(err);
       });
     return result;
   }
@@ -63,7 +63,7 @@ export default class TaskService extends Service {
       dsc: name,
     };
     await db.create(data).catch(err => {
-      throw ServiceError.from(err);
+      throw dbError.from(err);
     });
   }
   /**
@@ -100,7 +100,7 @@ export default class TaskService extends Service {
     } catch (error) {
       // 如果执行到此,则发生错误.
       // 该事务已由 Sequelize 自动回滚！
-      throw ServiceError.from(error);
+      throw dbError.from(error);
     }
   }
   /**
@@ -109,7 +109,7 @@ export default class TaskService extends Service {
    */
   public async deleteTask({ taskid }) {
     await this.ctx.model.Task.destroy({ where: { id: taskid } }).catch(err => {
-      throw ServiceError.from(err);
+      throw dbError.from(err);
     });
     await this.deleteAllMicroTask({ taskid });
   }
@@ -120,7 +120,7 @@ export default class TaskService extends Service {
    */
   public async deleteAllMicroTask({ taskid }) {
     await this.ctx.model.Microtask.destroy({ where: { taskid } }).catch(err => {
-      throw ServiceError.from(err);
+      throw dbError.from(err);
     });
   }
   /**
@@ -134,7 +134,7 @@ export default class TaskService extends Service {
         where: { id: data.id },
       },
     ).catch(error => {
-      throw ServiceError.from(error);
+      throw dbError.from(error);
     });
   }
   /**
@@ -148,7 +148,7 @@ export default class TaskService extends Service {
         where: { id },
       },
     ).catch(error => {
-      throw ServiceError.from(error);
+      throw dbError.from(error);
     });
   }
   /**
@@ -162,7 +162,7 @@ export default class TaskService extends Service {
         where: { id },
       },
     ).catch(error => {
-      throw ServiceError.from(error);
+      throw dbError.from(error);
     });
   }
   /**
@@ -176,7 +176,7 @@ export default class TaskService extends Service {
         where: { id },
       },
     ).catch(error => {
-      throw ServiceError.from(error);
+      throw dbError.from(error);
     });
   }
 
@@ -191,7 +191,7 @@ export default class TaskService extends Service {
     },
     { where: { taskid: id } },
     ).catch(error => {
-      throw ServiceError.from(error);
+      throw dbError.from(error);
     });
   }
 

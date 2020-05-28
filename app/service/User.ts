@@ -1,6 +1,6 @@
 import { Service } from 'egg';
-import ServiceError from '../core/error/service/serviceError';
-import { E400 } from '../core/error';
+import { dbError } from '../lib/index';
+import { E400 } from '../lib/index';
 
 /**
  * User Service
@@ -27,7 +27,7 @@ export default class UserService extends Service {
         return res;
       })
       .catch(err => {
-        throw ServiceError.from(err);
+        throw dbError.from(err);
       });
     if (dbResultByName) {
       const { salt: dbSalt, password: dbPassword } = dbResultByName;
@@ -81,7 +81,7 @@ export default class UserService extends Service {
         return [ task ? task.get({ plain: true }) : null, created ];
       })
       .catch(err => {
-        throw ServiceError.from(err);
+        throw dbError.from(err);
       });
     if (isCreate) {
       return this.ctx.helper.extendByFilter(dbResult, [ 'password', 'salt' ]);
@@ -102,7 +102,7 @@ export default class UserService extends Service {
       },
       where: { name },
     }).catch(err => {
-      throw ServiceError.from(err);
+      throw dbError.from(err);
     });
     if (dbResult) return false;
     return true;
@@ -126,7 +126,7 @@ export default class UserService extends Service {
     const dbResult = await ctx.model.User.update(queryData, {
       where: { id: data.userid },
     }).catch(err => {
-      throw ServiceError.from(err);
+      throw dbError.from(err);
     });
 
     if (dbResult && dbResult[0] === 1) {
@@ -145,7 +145,7 @@ export default class UserService extends Service {
       attributes: [ 'name', 'avatar_url' ],
       where: { id },
     }).catch(err => {
-      throw ServiceError.from(err);
+      throw dbError.from(err);
     });
     return info;
   }

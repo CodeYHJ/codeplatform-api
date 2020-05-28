@@ -1,6 +1,6 @@
 import { Service } from 'egg';
-import ServiceError from '../core/error/service/serviceError';
-import { E400 } from '../core/error';
+import { dbError } from '../lib/index';
+import { E400 } from '../lib/index';
 
 /**
  *
@@ -14,10 +14,10 @@ export default class AuthService extends Service {
   public async getAllToken(id) {
     const { ctx } = this;
     const result = await ctx.model.Auth.findAll({
-      attributes: ['name', 'id', 'credential', 'oauthType'],
+      attributes: [ 'name', 'id', 'credenti al', 'oauthType' ],
       where: { userid: id },
     }).catch(err => {
-      ServiceError.from(err);
+      dbError.from(err);
     });
     return result;
   }
@@ -32,10 +32,10 @@ export default class AuthService extends Service {
       defaults: tokenData,
     })
       .spread((token, created) => {
-        return [token ? token.get({ plain: true }) : null, created];
+        return [ token ? token.get({ plain: true }) : null, created ];
       })
       .catch(err => {
-        ServiceError.from(err);
+        dbError.from(err);
       });
     if (result[1]) {
       return true;
@@ -51,7 +51,7 @@ export default class AuthService extends Service {
     const { ctx } = this;
     const result = await ctx.model.Auth.update(tokenData, {
       where: { id: tokenData.id },
-    }).catch(err => ServiceError.from(err));
+    }).catch(err => dbError.from(err));
     if (result && result[0] === 1) {
       return true;
     }
@@ -64,7 +64,7 @@ export default class AuthService extends Service {
   public async deleteToken(tokenid) {
     const { ctx } = this;
     await ctx.model.Auth.destroy({ where: tokenid }).catch(err =>
-      ServiceError.from(err)
+      dbError.from(err),
     );
     return true;
   }

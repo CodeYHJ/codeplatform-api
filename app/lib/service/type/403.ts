@@ -1,6 +1,6 @@
-import { BusinessError } from '../businessError';
+import Base from '../base';
 
-class Unauthorized extends BusinessError {
+class Unauthorized extends Base {
   constructor() {
     super();
     this.code = '403';
