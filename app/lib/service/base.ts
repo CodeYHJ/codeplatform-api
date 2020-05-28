@@ -1,17 +1,11 @@
-interface BaseOptions {
-  data?: Record<string, any> | null;
-  [key: string]: any;
-}
+
 class Base {
   public code: string;
-  public options: BaseOptions;
-  public data: Record<string, any> | null
+  public data: Record<string, any> | null = null;
   public message: string
-  constructor(options?: BaseOptions) {
+  constructor() {
     this.code = '200';
-    this.options = options || {};
-    this.data = this.options.data || null;
-    this.message = this.options.message || '';
+    this.message = '';
   }
 }
 export default Base;

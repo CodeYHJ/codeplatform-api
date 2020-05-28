@@ -1,10 +1,10 @@
 import Base from '../base';
 
 class SucessResponse extends Base {
-  constructor(options) {
-    super(options);
+  constructor(data?: Record<string, any>) {
+    super();
     this.code = '200';
-    delete this.options;
+    data && (this.data = data);
   }
 }
 export default SucessResponse;

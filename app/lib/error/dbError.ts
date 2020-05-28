@@ -1,20 +1,13 @@
-class DBErroe extends Error {
-  public code: string;
-  public message: string;
-  public stack: string;
+import Base from './base';
+class DBErroe extends Base {
   constructor() {
-    super();
-    this.code = '600';
+    super({ code: '600', message: '网络故障，请稍后再试' });
   }
   public static from(error: Error) {
-    const dbErroe = new DBErroe();
-    dbErroe.stack = error.stack as string;
-    dbErroe.message = error.message;
-    for (const key of Object.keys(error)) {
-      dbErroe[key] = error[key];
-    }
-    return dbErroe;
-
+    const base = super.from(error);
+    base.code = '600';
+    base.message = '网络故障，请稍后再试';
+    return base;
   }
 }
 export default DBErroe;
