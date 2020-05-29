@@ -1,6 +1,6 @@
-import BaseController from './base';
-import { S200 } from '../core/error';
-export default class AuthController extends BaseController {
+import { S200 } from '../lib/index';
+import { Controller } from 'egg';
+export default class AuthController extends Controller {
   public async getToken() {
     const { ctx } = this;
     const { id: userid } = await ctx.getIdByRedis();
@@ -14,7 +14,7 @@ export default class AuthController extends BaseController {
       credential: 'string',
       oauthtype: { type: 'number', max: 3, min: 1 },
     };
-    await this.check(validateRule, ctx.request.body);
+    await ctx.checkValidate(validateRule, ctx.request.body);
     const { id: userid } = await ctx.getIdByRedis();
     const setDate = { userid, ...ctx.request.body };
     const result = await ctx.service.auth.setToken(setDate);
@@ -28,19 +28,18 @@ export default class AuthController extends BaseController {
       credential: 'string',
       oauthtype: { type: 'number', max: 3, min: 1 },
     };
-    await this.check(validateRule, ctx.request.body);
+    await ctx.checkValidate(validateRule, ctx.request.body);
     const { id: userid } = await ctx.getIdByRedis();
     const setDate = { userid, ...ctx.request.body };
     const result = await ctx.service.auth.updateToken(setDate);
     ctx.body = new S200({ status: result });
-
   }
   public async deleteToken() {
     const { ctx } = this;
     const validateRule = {
       id: 'number',
     };
-    await this.check(validateRule, ctx.request.body);
+    await ctx.checkValidate(validateRule, ctx.request.body);
     const result = await ctx.service.auth.deleteToken(ctx.request.body);
     ctx.body = new S200({ status: result });
   }

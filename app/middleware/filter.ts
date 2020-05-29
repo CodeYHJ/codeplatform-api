@@ -1,8 +1,8 @@
-import { E401 } from '../core/error';
+import { E401 } from '../lib/index';
 
 module.exports = () => {
   return async function(ctx, next) {
-    const whiteList = ['/', '/user/login', '/user/registered'];
+    const whiteList = [' /', '/user/login', '/user/registered'];
     const url = ctx.router.opts.routerPath || ctx.routerPath || ctx.path;
     if (!whiteList.includes(url)) {
       const isLogin = ctx.isAuthenticated();

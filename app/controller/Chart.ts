@@ -1,7 +1,7 @@
-import BaseController from './base';
-import { S200 } from '../core/error';
+import { S200 } from '../lib/index';
+import { Controller } from 'egg';
 
-export default class ChartController extends BaseController {
+export default class ChartController extends Controller {
   public async getTaskNumToday() {
     const { ctx, service } = this;
     const { id: userid } = await ctx.getIdByRedis();
@@ -33,6 +33,4 @@ export default class ChartController extends BaseController {
     const result = await service.chart.getTrend({ userid });
     ctx.body = new S200({ result });
   }
-
-
 }

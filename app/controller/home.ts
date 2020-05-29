@@ -1,5 +1,6 @@
-import BaseController from './base';
-export default class HomeController extends BaseController {
+import { Controller } from 'egg';
+
+export default class HomeController extends Controller {
   public async index() {
     const { ctx } = this;
 

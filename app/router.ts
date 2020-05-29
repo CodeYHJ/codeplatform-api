@@ -101,27 +101,4 @@ export default (app: Application) => {
   // 清空指定id下的微任务
   app.post('/task/deleteMall', 'task.deleteAllMicroTask');
 
-  /**
-   *
-   *
-   * 雨雀
-   *
-   */
-
-  // set token
-  app.post('/yuque/settingtoken', 'yuque.setToken');
-
-  // 外部获取所有文章
-  app.get('/yuque/allArticles', 'yuque.getAll');
-
-  // 外部获取指定文章
-  app.get('/yuque/articleDsc', 'yuque.articleDsc');
-
-  /**
-   *
-   * jenkins
-   *
-   */
-  app.get('/jenkins/alltest', 'jenkins.getAll');
-  app.get('/jenkins/testdsc', 'jenkins.getTestDsc');
 };

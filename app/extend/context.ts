@@ -1,4 +1,5 @@
-import ServiceError from '../core/error/service/serviceError';
+import { dbError } from '../lib/index';
+import { E400 } from '../lib/index';
 
 module.exports = {
   async getIdByRedis() {
@@ -16,7 +17,14 @@ module.exports = {
         return user;
       }
     } catch (error) {
-      throw ServiceError.from(error);
+      throw dbError.from(error);
+    }
+  },
+  async checkValidate(rule, requestData) {
+    const errors = await this.app.validator.validate(rule, requestData);
+    if (errors) {
+      this.ctx.logger.warn(errors);
+      throw new E400('请求参数错误');
     }
   },
 };

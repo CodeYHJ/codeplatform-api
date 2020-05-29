@@ -1,6 +1,6 @@
 import { Service } from 'egg';
-import ServiceError from '../core/error/service/serviceError';
-import { E400 } from '../core/error';
+import { dbError } from '../lib/index';
+import { E400 } from '../lib/index';
 
 /**
  * User Service
@@ -19,7 +19,7 @@ export default class UserService extends Service {
     } = this;
     const dbResultByName = await User.findOne({
       raw: true,
-      attributes: [ 'name', 'password', 'id', 'salt', 'create_at', 'avatar_url' ],
+      attributes: ['name', 'password', 'id', 'salt', 'create_at', 'avatar_url'],
       where: { name },
     })
       .then(res => {
@@ -27,18 +27,18 @@ export default class UserService extends Service {
         return res;
       })
       .catch(err => {
-        throw ServiceError.from(err);
+        throw dbError.from(err);
       });
     if (dbResultByName) {
       const { salt: dbSalt, password: dbPassword } = dbResultByName;
       const computerPassword = await this.ctx.helper.encryptionBySalt(
         password,
-        dbSalt,
+        dbSalt
       );
       if (dbPassword === computerPassword) {
         const yuqueDB = await Auth.findOne({
           raw: true,
-          attributes: [ 'oauthid' ],
+          attributes: ['oauthid'],
           where: { userid: dbResultByName.id },
         });
         dbResultByName.yuqueid = yuqueDB ? yuqueDB.oauthid : null;
@@ -62,7 +62,8 @@ export default class UserService extends Service {
     const { password: pd, salt } = await this.ctx.helper.encryption(password);
     const defaultModel = {
       name: '',
-      avatar_url: 'https://github.com/CodeYHJ/markDownPhoto/blob/master/admin/userlogo.png?raw=true',
+      avatar_url:
+        'https://github.com/CodeYHJ/markDownPhoto/blob/master/admin/userlogo.png?raw=true',
       phone: '',
       password: '',
       salt: '',
@@ -73,18 +74,18 @@ export default class UserService extends Service {
       password: pd,
       salt,
     };
-    const [ dbResult, isCreate ] = await this.ctx.model.User.findOrCreate({
+    const [dbResult, isCreate] = await this.ctx.model.User.findOrCreate({
       where: { name },
       defaults: setModel,
     })
       .spread((task, created) => {
-        return [ task ? task.get({ plain: true }) : null, created ];
+        return [task ? task.get({ plain: true }) : null, created];
       })
       .catch(err => {
-        throw ServiceError.from(err);
+        throw dbError.from(err);
       });
     if (isCreate) {
-      return this.ctx.helper.extendByFilter(dbResult, [ 'password', 'salt' ]);
+      return this.ctx.helper.extendByFilter(dbResult, ['password', 'salt']);
     }
     throw new E400('用户已存在');
   }
@@ -98,11 +99,11 @@ export default class UserService extends Service {
     const dbResult = await ctx.model.User.findOne({
       raw: true,
       attributes: {
-        exclude: [ 'password', 'id', 'salt', 'create_at', 'update_at' ],
+        exclude: ['password', 'id', 'salt', 'create_at', 'update_at'],
       },
       where: { name },
     }).catch(err => {
-      throw ServiceError.from(err);
+      throw dbError.from(err);
     });
     if (dbResult) return false;
     return true;
@@ -118,7 +119,7 @@ export default class UserService extends Service {
     delete queryData.id;
     if (queryData.password) {
       const { password: pd, salt } = await this.ctx.helper.encryption(
-        queryData.password,
+        queryData.password
       );
       queryData.password = pd;
       queryData.salt = salt;
@@ -126,7 +127,7 @@ export default class UserService extends Service {
     const dbResult = await ctx.model.User.update(queryData, {
       where: { id: data.userid },
     }).catch(err => {
-      throw ServiceError.from(err);
+      throw dbError.from(err);
     });
 
     if (dbResult && dbResult[0] === 1) {
@@ -142,10 +143,10 @@ export default class UserService extends Service {
     const { ctx } = this;
     const info = await ctx.model.User.findOne({
       raw: true,
-      attributes: [ 'name', 'avatar_url' ],
+      attributes: ['name', 'avatar_url'],
       where: { id },
     }).catch(err => {
-      throw ServiceError.from(err);
+      throw dbError.from(err);
     });
     return info;
   }

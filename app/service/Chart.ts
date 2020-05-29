@@ -1,6 +1,6 @@
 import { Service } from 'egg';
 import { Op } from 'sequelize';
-import ServiceError from '../core/error/service/serviceError';
+import { dbError } from '../lib/index';
 
 /**
  * Chart Service
@@ -24,7 +24,7 @@ export default class Chart extends Service {
         },
       },
     }).catch(err => {
-      throw ServiceError.from(err);
+      throw dbError.from(err);
     });
     const day_type_2_Result = await ctx.model.Task.findAll({
       where: {
@@ -37,9 +37,9 @@ export default class Chart extends Service {
         },
       },
     }).catch(err => {
-      throw ServiceError.from(err);
+      throw dbError.from(err);
     });
-    const dayResult = [ ...day_type_1_Result, ...day_type_2_Result ];
+    const dayResult = [...day_type_1_Result, ...day_type_2_Result];
     if (!dayResult || !dayResult.length) return day;
     day = await ctx.helper.filterTask(dayResult);
     return day;
@@ -65,7 +65,7 @@ export default class Chart extends Service {
         },
       },
     }).catch(err => {
-      throw ServiceError.from(err);
+      throw dbError.from(err);
     });
     if (!weekResult || !weekResult.length) return week;
     week = await ctx.helper.filterTask(weekResult);
@@ -106,50 +106,74 @@ export default class Chart extends Service {
    */
   public async getTasksNum({ userid }) {
     const { ctx } = this;
-    const result = await ctx.model.transaction(async t => {
-      const dbResult = await ctx.model.Microtask.findAll({
-        raw: true,
-        where: {
-          userid,
-        },
-        attributes: [ 'priority', [ ctx.model.Sequelize.fn('COUNT', ctx.model.Sequelize.col('priority')), 'total' ], [ ctx.model.Sequelize.fn('SUM', ctx.model.Sequelize.col('complete')), 'complete' ]],
-        group: [ 'priority' ],
-        transaction: t,
+    const result = await ctx.model
+      .transaction(async t => {
+        const dbResult = await ctx.model.Microtask.findAll({
+          raw: true,
+          where: {
+            userid,
+          },
+          attributes: [
+            'priority',
+            [
+              ctx.model.Sequelize.fn(
+                'COUNT',
+                ctx.model.Sequelize.col('priority')
+              ),
+              'total',
+            ],
+            [
+              ctx.model.Sequelize.fn(
+                'SUM',
+                ctx.model.Sequelize.col('complete')
+              ),
+              'complete',
+            ],
+          ],
+          group: ['priority'],
+          transaction: t,
+        });
+        return dbResult;
+      })
+      .catch(error => {
+        throw dbError.from(error);
       });
-      return dbResult;
-    }).catch(error => {
-      throw ServiceError.from(error);
-    });
     return result;
   }
   public async getTrend({ userid }) {
-    const { ctx, ctx: { model: { Sequelize } },
+    const {
+      ctx,
+      ctx: {
+        model: { Sequelize },
+      },
     } = this;
-    const result = await ctx.model.transaction(async t => {
-      const dbResult = await ctx.model.Microtask.findAll({
-        raw: true,
-        where: {
-          userid,
-          create_at: {
-            // createdAt < [timestamp] AND createdAt > [timestamp]
-            [Op.lte]: ctx.helper.timeEndInMonth(),
-            [Op.gte]: ctx.helper.timeStartInMonth(),
+    const result = await ctx.model
+      .transaction(async t => {
+        const dbResult = await ctx.model.Microtask.findAll({
+          raw: true,
+          where: {
+            userid,
+            create_at: {
+              // createdAt < [timestamp] AND createdAt > [timestamp]
+              [Op.lte]: ctx.helper.timeEndInMonth(),
+              [Op.gte]: ctx.helper.timeStartInMonth(),
+            },
           },
-        },
-        attributes: [
-          'priority',
-          [ Sequelize.fn('COUNT', Sequelize.col('priority')), 'total' ],
-          [ Sequelize.fn('SUM', Sequelize.col('complete')), 'complete' ],
-          [ Sequelize.fn('day', Sequelize.col('create_at')), 'day' ],
-        ],
+          attributes: [
+            'priority',
+            [Sequelize.fn('COUNT', Sequelize.col('priority')), 'total'],
+            [Sequelize.fn('SUM', Sequelize.col('complete')), 'complete'],
+            [Sequelize.fn('day', Sequelize.col('create_at')), 'day'],
+          ],
 
-        group: [ 'create_at' ],
-        transaction: t,
+          group: ['priority', Sequelize.fn('day', Sequelize.col('create_at'))],
+          transaction: t,
+        });
+        return dbResult;
+      })
+      .catch(error => {
+        throw dbError.from(error);
       });
-      return dbResult;
-    }).catch(error => {
-      throw ServiceError.from(error);
-    });
     return result;
   }
 }

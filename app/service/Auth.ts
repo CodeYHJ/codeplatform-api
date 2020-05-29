@@ -1,6 +1,6 @@
 import { Service } from 'egg';
-import ServiceError from '../core/error/service/serviceError';
-import { E400 } from '../core/error';
+import { dbError } from '../lib/index';
+import { E400 } from '../lib/index';
 
 /**
  *
@@ -13,13 +13,19 @@ export default class AuthService extends Service {
    */
   public async getAllToken(id) {
     const { ctx } = this;
-    const result = await ctx.model.Auth.findAll({
-      attributes: ['name', 'id', 'credential', 'oauthType'],
-      where: { userid: id },
-    }).catch(err => {
-      ServiceError.from(err);
-    });
-    return result;
+    try {
+      const result = await this.ctx.model.transaction(async t => {
+        const result = await ctx.model.Auth.findAll({
+          attributes: [ 'name', 'id', 'credential', 'oauthType' ],
+          where: { userid: id },
+          transaction: t,
+        });
+        return result;
+      });
+      return result;
+    } catch (error) {
+      throw dbError.from(error);
+    }
   }
   /**
    *
@@ -27,20 +33,25 @@ export default class AuthService extends Service {
    */
   public async setToken(tokenData) {
     const { ctx } = this;
-    const result = await ctx.model.Auth.findOrCreate({
-      where: { credential: tokenData.credential },
-      defaults: tokenData,
-    })
-      .spread((token, created) => {
-        return [token ? token.get({ plain: true }) : null, created];
-      })
-      .catch(err => {
-        ServiceError.from(err);
+    try {
+      const result = await this.ctx.model.transaction(async t => {
+        const result = await ctx.model.Auth.findOrCreate({
+          where: { credential: tokenData.credential },
+          transaction: t,
+          defaults: tokenData,
+        }).spread((token, created) => {
+          return [ token ? token.get({ plain: true }) : null, created ];
+        });
+        return result;
       });
-    if (result[1]) {
-      return true;
+
+      if (Array.isArray(result) && result[1]) {
+        return true;
+      }
+      throw new E400('已存在相同的token');
+    } catch (error) {
+      throw dbError.from(error);
     }
-    throw new E400('已存在相同的token');
   }
   /**
    *
@@ -51,7 +62,7 @@ export default class AuthService extends Service {
     const { ctx } = this;
     const result = await ctx.model.Auth.update(tokenData, {
       where: { id: tokenData.id },
-    }).catch(err => ServiceError.from(err));
+    }).catch(err => dbError.from(err));
     if (result && result[0] === 1) {
       return true;
     }
@@ -64,7 +75,7 @@ export default class AuthService extends Service {
   public async deleteToken(tokenid) {
     const { ctx } = this;
     await ctx.model.Auth.destroy({ where: tokenid }).catch(err =>
-      ServiceError.from(err)
+      dbError.from(err),
     );
     return true;
   }

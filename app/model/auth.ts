@@ -17,12 +17,11 @@ module.exports = app => {
     {
       timestamps: false,
       freezeTableName: true,
-    }
+    },
   );
 
   Auth.associate = function() {
     app.model.Auth.belongsTo(app.model.User, {
-      targetKey: 'id',
       foreignKey: 'userid',
     });
   };
