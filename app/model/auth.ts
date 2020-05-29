@@ -22,7 +22,6 @@ module.exports = app => {
 
   Auth.associate = function() {
     app.model.Auth.belongsTo(app.model.User, {
-      targetKey: 'id',
       foreignKey: 'userid',
     });
   };

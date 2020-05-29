@@ -2,18 +2,18 @@
 // Do not modify this file!!!!!!!!!
 
 import 'egg';
-import ExportAuth from '../../../app/controller/auth';
 import ExportChart from '../../../app/controller/Chart';
-import ExportHome from '../../../app/controller/home';
 import ExportTask from '../../../app/controller/Task';
 import ExportUser from '../../../app/controller/User';
+import ExportAuth from '../../../app/controller/auth';
+import ExportHome from '../../../app/controller/home';
 
 declare module 'egg' {
   interface IController {
-    auth: ExportAuth;
     chart: ExportChart;
-    home: ExportHome;
     task: ExportTask;
     user: ExportUser;
+    auth: ExportAuth;
+    home: ExportHome;
   }
 }
