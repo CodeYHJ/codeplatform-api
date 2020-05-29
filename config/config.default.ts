@@ -24,7 +24,10 @@ export default (appInfo: EggAppInfo) => {
         headerName: 'x-csrf-token',
         ignoreJSON: false,
       },
-      domainWhiteList: [ 'https://pretest.codeyhj.cn' ],
+      domainWhiteList: [
+        'https://pretest.codeyhj.cn',
+        'https://admin.codeyhj.cn',
+      ],
     },
     // 跨域配置
     cors: {
@@ -44,7 +47,7 @@ export default (appInfo: EggAppInfo) => {
   config.keys = appInfo.name + '_1584204692957_7292';
 
   // add your egg config in here
-  config.middleware = [ 'interceptErr', 'filter' ];
+  config.middleware = ['interceptErr', 'filter'];
 
   // add your special config in here
   const bizConfig = {
