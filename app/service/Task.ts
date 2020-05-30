@@ -1,11 +1,10 @@
 import { Service } from 'egg';
-import { dbError } from '../lib/index';
+import { dbError, E400 } from '../lib/index';
 
 /**
  * Task Service
  */
 export default class TaskService extends Service {
-
   /**
    *
    * @param {name,id} data - 新建任务
@@ -32,13 +31,13 @@ export default class TaskService extends Service {
       .findAll({
         where: { userid },
         order: [
-          [ 'id', 'asc' ],
-          [ Microtask, 'id', 'asc' ],
+          ['id', 'asc'],
+          [Microtask, 'id', 'asc'],
         ],
         include: [
           {
             model: Microtask,
-            attributes: { exclude: [ 'update_at', 'create_at' ] },
+            attributes: { exclude: ['update_at', 'create_at'] },
           },
         ],
       })
@@ -81,9 +80,7 @@ export default class TaskService extends Service {
       const result = await this.ctx.model.transaction(async t => {
         const task = await db.findOne({
           where: { id: taskid },
-          order: [
-            [ Microtask, 'id', 'asc' ],
-          ],
+          order: [[Microtask, 'id', 'asc']],
           include: [
             {
               model: Microtask,
@@ -132,7 +129,7 @@ export default class TaskService extends Service {
       { complete: data.complete },
       {
         where: { id: data.id },
-      },
+      }
     ).catch(error => {
       throw dbError.from(error);
     });
@@ -146,7 +143,7 @@ export default class TaskService extends Service {
       { dsc },
       {
         where: { id },
-      },
+      }
     ).catch(error => {
       throw dbError.from(error);
     });
@@ -160,7 +157,7 @@ export default class TaskService extends Service {
       { priority },
       {
         where: { id },
-      },
+      }
     ).catch(error => {
       throw dbError.from(error);
     });
@@ -174,7 +171,7 @@ export default class TaskService extends Service {
       { remark },
       {
         where: { id },
-      },
+      }
     ).catch(error => {
       throw dbError.from(error);
     });
@@ -186,13 +183,29 @@ export default class TaskService extends Service {
    */
   public async upDateDeadTime({ id, endtime = false }) {
     const { ctx } = this;
-    await ctx.model.Microtask.update({
-      endtime: endtime ? endtime : null,
-    },
-    { where: { taskid: id } },
+    await ctx.model.Microtask.update(
+      {
+        endtime: endtime ? endtime : null,
+      },
+      { where: { taskid: id } }
     ).catch(error => {
       throw dbError.from(error);
     });
   }
-
+  /**
+   *
+   * @param param0 - 更新任务名字
+   */
+  public async upDateTaskName({ id, name }) {
+    const { ctx } = this;
+    const result = await ctx.model.Task.update(
+      { name },
+      { where: { id } }
+    ).catch(error => {
+      throw dbError.from(error);
+    });
+    if (Array.isArray(result) && !result[0]) {
+      throw new E400('更新失败');
+    }
+  }
 }

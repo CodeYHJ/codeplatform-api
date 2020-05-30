@@ -3,7 +3,6 @@ import { Controller } from 'egg';
 import { S200 } from '../lib/index';
 
 export default class TaskController extends Controller {
-
   public async createTask() {
     const { ctx, service } = this;
     const validateRule = {
@@ -93,6 +92,16 @@ export default class TaskController extends Controller {
     await service.task.upDateMicroTaskRemark(ctx.request.body);
     ctx.body = new S200({ status: true });
   }
+  public async upDateTaskName() {
+    const { ctx, service } = this;
+    const validateRule = {
+      id: 'number',
+      name: 'string',
+    };
+    await ctx.checkValidate(validateRule, ctx.request.body);
+    await service.task.upDateTaskName(ctx.request.body);
+    ctx.body = new S200({ status: true });
+  }
   public async upDateDeadTime() {
     const { ctx, service } = this;
     const validateRule = {
@@ -112,6 +121,4 @@ export default class TaskController extends Controller {
     await service.task.deleteAllMicroTask(ctx.request.body);
     ctx.body = new S200({ status: true });
   }
-
-
 }

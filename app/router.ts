@@ -62,7 +62,6 @@ export default (app: Application) => {
   // 任务趋势
   app.get('/chart/getTrend', 'chart.getTrend');
 
-
   /**
    *
    *
@@ -101,5 +100,6 @@ export default (app: Application) => {
   // 清空指定id下的微任务
   app.post('/task/deleteMall', 'task.deleteAllMicroTask');
 
-
+  // 更改指定id下的任名务
+  app.post('/task/upName', 'task.upDateTaskName');
 };
