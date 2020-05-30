@@ -100,9 +100,6 @@ export default (app: Application) => {
   // 清空指定id下的微任务
   app.post('/task/deleteMall', 'task.deleteAllMicroTask');
 
-<<<<<<< HEAD
-=======
   // 更改指定id下的任名务
   app.post('/task/upName', 'task.upDateTaskName');
->>>>>>> develop
 };

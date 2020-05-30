@@ -192,8 +192,6 @@ export default class TaskService extends Service {
       throw dbError.from(error);
     });
   }
-<<<<<<< HEAD
-=======
   /**
    *
    * @param param0 - 更新任务名字
@@ -210,5 +208,4 @@ export default class TaskService extends Service {
       throw new E400('更新失败');
     }
   }
->>>>>>> develop
 }
