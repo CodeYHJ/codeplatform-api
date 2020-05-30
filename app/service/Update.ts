@@ -23,7 +23,7 @@ export default class UpdateService extends Service {
       include: [
         {
           model: ctx.model.Microtask,
-          attributes: { exclude: [ 'update_at', 'create_at' ] },
+          attributes: { exclude: ['update_at', 'create_at'] },
         },
       ],
     }).catch(err => {
@@ -46,7 +46,7 @@ export default class UpdateService extends Service {
       include: [
         {
           model: ctx.model.Microtask,
-          attributes: { exclude: [ 'update_at', 'create_at' ] },
+          attributes: { exclude: ['update_at', 'create_at'] },
         },
       ],
     }).catch(err => {
@@ -95,7 +95,7 @@ export default class UpdateService extends Service {
       const task = taskidList[i];
       await this.ctx.model.Task.update(
         { complete: task.complete },
-        { where: { id: task.id } },
+        { where: { id: task.id } }
       ).catch(err => {
         console.log(err);
         throw dbError.from(err);
@@ -119,7 +119,7 @@ export default class UpdateService extends Service {
       const task = taskidList[i];
       await this.ctx.model.Task.update(
         { complete: task.complete },
-        { where: { id: task.id } },
+        { where: { id: task.id } }
       ).catch(err => {
         console.log(err);
         throw dbError.from(err);
@@ -167,7 +167,7 @@ export default class UpdateService extends Service {
       include: [
         {
           model: ctx.model.Microtask,
-          attributes: { exclude: [ 'update_at', 'create_at' ] },
+          attributes: { exclude: ['update_at', 'create_at'] },
         },
       ],
     }).catch(err => {
@@ -177,7 +177,7 @@ export default class UpdateService extends Service {
       const task = result[index];
       if (!task.microtasks.length) {
         await this.service.task.deleteTask({ taskid: task.id });
-        await this.service.task.deleteMicroTaskByTaskId(task.id);
+        // await this.service.task.deleteMicroTaskByTaskId(task.id);
       }
     }
     return result;
