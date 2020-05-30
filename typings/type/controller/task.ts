@@ -1,10 +1,4 @@
 export interface TaskController {
-  index: Promise<void>;
-  addtask: Promise<void>;
-  closetask: Promise<void>;
-  updatetask: Promise<void>;
-  deletemicrotask: Promise<void>;
-  /// ///
   createTask: Promise<void>;
   getTask: Promise<void>;
   createMicro: Promise<void>;
@@ -16,4 +10,5 @@ export interface TaskController {
   upDateMicroTaskRemark: Promise<void>;
   upDateDeadTime: Promise<void>;
   deleteAllMicroTask: Promise<void>;
+  upDateTaskName: Promise<void>;
 }

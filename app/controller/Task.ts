@@ -92,6 +92,16 @@ export default class TaskController extends Controller {
     await service.task.upDateMicroTaskRemark(ctx.request.body);
     ctx.body = new S200({ status: true });
   }
+  public async upDateTaskName() {
+    const { ctx, service } = this;
+    const validateRule = {
+      id: 'number',
+      name: 'string',
+    };
+    await ctx.checkValidate(validateRule, ctx.request.body);
+    await service.task.upDateTaskName(ctx.request.body);
+    ctx.body = new S200({ status: true });
+  }
   public async upDateDeadTime() {
     const { ctx, service } = this;
     const validateRule = {

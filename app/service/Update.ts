@@ -177,7 +177,7 @@ export default class UpdateService extends Service {
       const task = result[index];
       if (!task.microtasks.length) {
         await this.service.task.deleteTask({ taskid: task.id });
-        await this.service.task.deleteMicroTaskByTaskId(task.id);
+        // await this.service.task.deleteMicroTaskByTaskId(task.id);
       }
     }
     return result;

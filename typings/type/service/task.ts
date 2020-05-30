@@ -37,14 +37,7 @@ export interface Task {
   starttime: string | null;
   endtime: string | null;
 }
-interface AddTaskRequest {
-  userid: number;
-  name: string;
-  type: SelectType;
-  complete: Complete;
-  starttime: string;
-  endtime: string;
-}
+
 export interface UpdateTaskControllerRequest {
   id: number;
   userid: number;
@@ -57,13 +50,6 @@ export interface UpdateTaskControllerRequest {
   endtime?: string;
 }
 
-interface AddTaskCustomizeRequest {
-  userid: number;
-  name: string;
-  type: SelectType;
-  complete: Complete;
-  frequency: FrequencyEnum;
-}
 export type AddMicroTaskModel = Micro[];
 
 /// ///
@@ -84,10 +70,10 @@ interface BaseResponse {
   endtime: string | null;
 }
 
-interface CreateTask extends BaseData { }
+interface CreateTask extends BaseData {}
 
-interface GetTask extends BaseData { }
-interface GetTaskResponse extends BaseResponse { }
+interface GetTask extends BaseData {}
+interface GetTaskResponse extends BaseResponse {}
 
 interface CreateMicro {
   id: number;
@@ -95,7 +81,7 @@ interface CreateMicro {
   userid: number;
 }
 
-interface GetTaskByTaskId extends BaseData { }
+interface GetTaskByTaskId extends BaseData {}
 
 interface DeleteTask {
   taskid: number;
@@ -148,6 +134,10 @@ interface UpDateDeadTime {
   id: number;
   endTime?: Date;
 }
+interface UpDateTaskName {
+  id: number;
+  name: string;
+}
 export abstract class TaskService {
   public abstract createTask: PromiseCb<CreateTask, void>;
   public abstract getTask: PromiseCb<GetTask, GetTaskResponse>;
@@ -157,22 +147,12 @@ export abstract class TaskService {
   public abstract deleteAllMicroTask: PromiseCb<DeleteAllMicroTask, void>;
   public abstract upDateMicroTaskStatus: PromiseCb<UpDateMicroTaskStatus, void>;
   public abstract upDateMicroTaskDsc: PromiseCb<UpDateMicroTaskDsc, void>;
-  public abstract upDateMicroTaskPriority: PromiseCb<UpDateMicroTaskPriority, void>;
+  public abstract upDateMicroTaskPriority: PromiseCb<
+    UpDateMicroTaskPriority,
+    void
+  >;
   public abstract upDateMicroTaskRemark: PromiseCb<UpDateMicroTaskRemark, void>;
   public abstract getTasksNum: PromiseCb<GetTasksNum, GetTasksNumResult>;
   public abstract upDateDeadTime: PromiseCb<UpDateDeadTime, void>;
-
-
-  /// //
-  public abstract addTask: PromiseCb<AddTaskRequest, Task>;
-  public abstract updateTaskController: PromiseCb<
-  UpdateTaskControllerRequest,
-  boolean
-  >;
-  public abstract addTaskByCustomize: PromiseCb<AddTaskCustomizeRequest, Task>;
-  public abstract updateTask: PromiseCb<UpdateTaskControllerRequest, boolean>;
-  public abstract addMicroTaskList: PromiseCb<Micro[], void>;
-  public abstract upDateMicroTask: PromiseCb<Micro, void>;
-  public abstract deleteMicroTask: PromiseCb<number, void>;
-  public abstract deleteMicroTaskByTaskId: PromiseCb<number, void>;
+  public abstract upDateTaskName: PromiseCb<UpDateTaskName, void>;
 }

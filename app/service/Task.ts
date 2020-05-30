@@ -1,5 +1,5 @@
 import { Service } from 'egg';
-import { dbError } from '../lib/index';
+import { dbError, E400 } from '../lib/index';
 
 /**
  * Task Service
@@ -192,4 +192,23 @@ export default class TaskService extends Service {
       throw dbError.from(error);
     });
   }
+<<<<<<< HEAD
+=======
+  /**
+   *
+   * @param param0 - 更新任务名字
+   */
+  public async upDateTaskName({ id, name }) {
+    const { ctx } = this;
+    const result = await ctx.model.Task.update(
+      { name },
+      { where: { id } }
+    ).catch(error => {
+      throw dbError.from(error);
+    });
+    if (Array.isArray(result) && !result[0]) {
+      throw new E400('更新失败');
+    }
+  }
+>>>>>>> develop
 }
