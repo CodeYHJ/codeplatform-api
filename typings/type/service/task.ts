@@ -37,14 +37,7 @@ export interface Task {
   starttime: string | null;
   endtime: string | null;
 }
-interface AddTaskRequest {
-  userid: number;
-  name: string;
-  type: SelectType;
-  complete: Complete;
-  starttime: string;
-  endtime: string;
-}
+
 export interface UpdateTaskControllerRequest {
   id: number;
   userid: number;
@@ -57,13 +50,6 @@ export interface UpdateTaskControllerRequest {
   endtime?: string;
 }
 
-interface AddTaskCustomizeRequest {
-  userid: number;
-  name: string;
-  type: SelectType;
-  complete: Complete;
-  frequency: FrequencyEnum;
-}
 export type AddMicroTaskModel = Micro[];
 
 /// ///
