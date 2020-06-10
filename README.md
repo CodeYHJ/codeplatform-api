@@ -28,25 +28,27 @@
 
 ## 搭建文章
 
-[从零搭建项目（1） -- 项目及其技术概括](https://www.yuque.com/u120129/dyqi27/gdcniz)
+[从零搭建项目 -- 发布项目流程](https://www.yuque.com/u120129/aygter/ox6drs)
 
-[从零搭建项目（2）-- 项目初始化](https://www.yuque.com/u120129/dyqi27/po32su)
+[从零搭建项目（1） -- 项目及其技术概括](https://www.yuque.com/u120129/aygter/gdcniz)
 
-[从零搭建项目（3）-- less 与 Ant Design](https://www.yuque.com/u120129/dyqi27/tkiiwr)
+[从零搭建项目（2）-- 项目初始化](https://www.yuque.com/u120129/aygter/po32su)
 
-[从零搭建项目（4）-- 开发体验优化](https://www.yuque.com/u120129/dyqi27/osyxvv)
+[从零搭建项目（3）-- less 与 Ant Design](https://www.yuque.com/u120129/aygter/tkiiwr)
 
-[从零搭建项目（5）-- 路由与状态管理](https://www.yuque.com/u120129/dyqi27/sg1m3b)
+[从零搭建项目（4）-- 开发体验优化](https://www.yuque.com/u120129/aygter/osyxvv)
 
-[从零搭建项目（6） -- 打包（webpack）](https://www.yuque.com/u120129/dyqi27/iowaqz)
+[从零搭建项目（5）-- 路由与状态管理](https://www.yuque.com/u120129/aygter/sg1m3b)
 
-[从零搭建项目（7）-- 使用 Docker](https://www.yuque.com/u120129/dyqi27/gliga9)
+[从零搭建项目（6） -- 打包（webpack）](https://www.yuque.com/u120129/aygter/iowaqz)
 
-[从零开始搭建（8）-- 后端](https://www.yuque.com/u120129/dyqi27/kunw0y)
+[从零搭建项目（7）-- 使用 Docker](https://www.yuque.com/u120129/aygter/gliga9)
 
-[从零搭建项目（9）-- Jenkins 部署与发布](https://www.yuque.com/u120129/dyqi27/gyfmq7)
+[从零开始搭建（8）-- 后端](https://www.yuque.com/u120129/aygter/kunw0y)
 
-[从零搭建项目（10） -- Nginx 部署与配置](https://www.yuque.com/u120129/dyqi27/lf9tdw)
+[从零搭建项目（9）-- Jenkins 部署与发布](https://www.yuque.com/u120129/aygter/gyfmq7)
+
+[从零搭建项目（10） -- Nginx 部署与配置](https://www.yuque.com/u120129/aygter/lf9tdw)
 
 ## 技术栈
 
