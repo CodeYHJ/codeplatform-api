@@ -33,7 +33,6 @@ export default class AuthController extends Controller {
     const setDate = { userid, ...ctx.request.body };
     const result = await ctx.service.auth.updateToken(setDate);
     ctx.body = new S200({ status: result });
-
   }
   public async deleteToken() {
     const { ctx } = this;

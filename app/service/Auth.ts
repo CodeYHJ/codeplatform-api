@@ -16,7 +16,7 @@ export default class AuthService extends Service {
     try {
       const result = await this.ctx.model.transaction(async t => {
         const result = await ctx.model.Auth.findAll({
-          attributes: ['name', 'id', 'credential', 'oauthType'],
+          attributes: [ 'name', 'id', 'credential', 'oauthType' ],
           where: { userid: id },
           transaction: t,
         });
@@ -40,7 +40,7 @@ export default class AuthService extends Service {
           transaction: t,
           defaults: tokenData,
         }).spread((token, created) => {
-          return [token ? token.get({ plain: true }) : null, created];
+          return [ token ? token.get({ plain: true }) : null, created ];
         });
         return result;
       });
@@ -75,7 +75,7 @@ export default class AuthService extends Service {
   public async deleteToken(tokenid) {
     const { ctx } = this;
     await ctx.model.Auth.destroy({ where: tokenid }).catch(err =>
-      dbError.from(err)
+      dbError.from(err),
     );
     return true;
   }

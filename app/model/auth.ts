@@ -17,7 +17,7 @@ module.exports = app => {
     {
       timestamps: false,
       freezeTableName: true,
-    }
+    },
   );
 
   Auth.associate = function() {

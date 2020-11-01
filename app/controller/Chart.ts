@@ -33,6 +33,4 @@ export default class ChartController extends Controller {
     const result = await service.chart.getTrend({ userid });
     ctx.body = new S200({ result });
   }
-
-
 }
