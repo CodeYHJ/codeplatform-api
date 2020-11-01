@@ -24,15 +24,16 @@ export default (appInfo: EggAppInfo) => {
         headerName: 'x-csrf-token',
         ignoreJSON: false,
       },
-      domainWhiteList: [
-        'https://pretest.codeyhj.cn',
-        'https://admin.codeyhj.cn',
-      ],
+      // domainWhiteList: [
+      //   'https://pretest.codeyhj.cn',
+      //   'https://admin.codeyhj.cn',
+      //   'https://codeui.codeyhj.cn',
+      // ],
     },
     // 跨域配置
     cors: {
       credentials: true,
-      // origin: ctx => ctx.get('origin'),
+      origin: ctx => ctx.get('origin'),
       allowMethods: 'GET,POST,OPTIONS',
     },
     // 参数验证配置
